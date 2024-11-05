@@ -1,15 +1,9 @@
 import { products } from "../hello.mjs"; // Asegúrate de que la ruta sea correcta
 
-export async function GET(request, { params }) {
+export async function GET(request) {
     // Asegúrate de que 'params' esté definido
-    if (!params || !params.id) {
-        return new Response(JSON.stringify({ error: 'ID not provided' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-        });
-    }
-
-    const id = params.id; // Aquí debería estar 'id'
+    const url = new URL(request.url);
+    const id = url.pathname.split('/').pop();
     const product = products.products.find(product => product.id === Number(id));
 
     if (!product) {
