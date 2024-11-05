@@ -1,7 +1,6 @@
-import { redirect, useFetcher, useNavigate } from "react-router-dom";
+import { redirect, useFetcher } from "react-router-dom";
 
 export const Search = () => {
-  const navigate = useNavigate();
   const fetcher = useFetcher();
   return (
     <div>
