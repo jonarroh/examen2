@@ -1,7 +1,7 @@
 import { products } from "../hello.mjs";
 
 export async function GET(request, { params }) {
-    const { id } = params;
+    const id = params.id;
     const product = products.products.find(product => product.id === Number(id));
 
     if (!product) {
