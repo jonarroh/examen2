@@ -1,4 +1,4 @@
-const products = {
+export const products = {
   "products": [
     {
       "id": 1,
@@ -558,7 +558,7 @@ const products = {
   "limit": 30
 }
 
-const compras = []
+export const compras = []
 
 
 export function GET(request) {

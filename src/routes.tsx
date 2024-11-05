@@ -1,18 +1,14 @@
-import { createBrowserRouter, Link } from "react-router-dom";
-
+import { createBrowserRouter } from "react-router-dom";
+import { Search } from "./pages/Search";
+import Detalle from "./pages/Detalle";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <div>
-        <h1>Hello World</h1>
-        <Link to="about">About Us</Link>
-      </div>
-    ),
+    element: <Search />
   },
   {
-    path: "about",
-    element: <div>About</div>,
+    path: "/search",
+    element: <Detalle />,
   },
 ]);
 
