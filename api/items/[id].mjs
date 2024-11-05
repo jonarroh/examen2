@@ -10,10 +10,13 @@ export async function GET(request) {
             throw new Error('Error al obtener productos de Firebase');
         }
 
-        const products = await response.json();
+        let products = await response.json();
+
+        products = products.products;
+
 
         // Buscar el producto por ID
-        const product = Object.values(products).find(product => product.id === Number(id));
+        const product = products.find(product => product.id === Number(id));
 
         if (!product) {
             return new Response(JSON.stringify({ error: 'Product not found' }), {

@@ -11,13 +11,15 @@ export async function GET(request) {
     }
 
     const data = await response.json();
-    const products = Object.values(data); // Convierte el objeto en un array
+    const products = data.products
 
     // Filtrar productos que contengan la query en su título o descripción
     const filteredProducts = products.filter(product =>
-      product.title.toLowerCase().includes(query.toLowerCase()) ||
-      product.description.toLowerCase().includes(query.toLowerCase())
+      product.brand.toLowerCase().includes(query.toLowerCase()) ||
+      product.category.toLowerCase().includes(query.toLowerCase())
     );
+
+    console.log(filteredProducts);
 
     return new Response(JSON.stringify(filteredProducts), {
       status: 200,
