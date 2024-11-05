@@ -557,35 +557,17 @@ export const products = {
   "skip": 0,
   "limit": 30
 }
+const fireBase = "https://daybook-460dd-default-rtdb.firebaseio.com/"
 
-export const compras = []
-
-
-export function GET(request) {
-  const url = new URL(request.url)
-  const type = url.searchParams.get('type')
-  const q = url.searchParams.get('q')
-
-  if (type === 'search') {
-    const filteredProducts = products.products.filter(product => product.title.toLowerCase().includes(q.toLowerCase()))
-    return new Response(JSON.stringify(filteredProducts));
-  }
-  if (type === 'compras') {
-    return new Response(JSON.stringify(compras));
-  }
+async function seedRealTimeDatabase() {
+  const rest = await fetch(fireBase + "products.json", {
+    method: 'PUT',
+    body: JSON.stringify(products),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  return rest.json()
 }
 
-export async function POST(request) {
-  const body = await request.json()
-  compras.push(body)
-  return new Response(JSON.stringify(compras));
-}
-
-export function PUT(request) {
-  return new Response(JSON.stringify({ message: 'Hello World' }));
-}
-
-export function DELETE(request) {
-  return new Response(JSON.stringify({ message: 'Hello World' }));
-}
-
+seedRealTimeDatabase().then(console.log).catch(console.error)
