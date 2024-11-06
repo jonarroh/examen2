@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Search } from "./pages/Search";
-import Detalle from "./pages/Detalle";
+import Detalle, { DetalleLoader } from "./pages/Detalle";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -9,6 +9,7 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <Detalle />,
+    loader: DetalleLoader
   },
 ]);
 
