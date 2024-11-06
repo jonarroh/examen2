@@ -16,42 +16,51 @@ export const ProductLoader: LoaderFunction = async ({ params }: LoaderFunctionAr
 
 // Action para manejar la compra
 export const ProductAction = async ({ request }: ActionFunctionArgs) => {
-  // Convertir FormData a un objeto JSON
-  const formData = await request.formData();
-  const productData = Object.fromEntries(formData.entries());
+  try {
+    // Convertir FormData a un objeto JSON
+    const formData = await request.formData();
+    const productData = Object.fromEntries(formData.entries());
 
-  // Convertir los datos a JSON antes de enviarlos
-  const json = JSON.stringify({
-    productId: productData.productId,
-    title: productData.title,
-    price: productData.price,
-    description: productData.description,
-    brand: productData.brand,
-    stock: productData.stock,
-    category: productData.category,
-    images: JSON.parse(productData.images as string), // Parseamos las imágenes de vuelta a su formato original
-    quantity: productData.quantity,
-  });
-
-  const response = await fetch("https://examen2-mauve.vercel.app/api/addSale", {
-    method: 'POST',
-    body: json,
-    headers: {
-      'Content-Type': 'application/json',
+    // Asegurarse de que 'images' esté bien formateado (si es una cadena, parsearlo)
+    let images = productData.images;
+    if (typeof images === 'string') {
+      images = JSON.parse(images); // Solo parsear si es un string JSON
     }
-  });
 
-  console.log(response);
+    // Preparar el objeto de datos para enviar en la solicitud
+    const json = JSON.stringify({
+      productId: productData.productId,
+      title: productData.title,
+      price: productData.price,
+      description: productData.description,
+      brand: productData.brand,
+      stock: productData.stock,
+      category: productData.category,
+      images,  // Imágenes ya procesadas
+      quantity: productData.quantity,
+    });
 
-  if (response.ok) {
-    return redirect("/"); // Redirige a la página principal
-  } else {
-    return {
-      status: response.status,
-      error: await response.json()
-    };
+    // Enviar la solicitud POST
+    const response = await fetch("https://examen2-mauve.vercel.app/api/addSale", {
+      method: 'POST',
+      body: json,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      return redirect("/"); // Redirige a la página principal
+    } else {
+      const errorData = await response.json();
+      return { status: response.status, error: errorData };
+    }
+  } catch (error) {
+    console.error("Error en la acción del producto:", error);
+    return { status: 500, error: "Error interno del servidor" };
   }
 };
+
 
 // Componente para mostrar detalles del producto
 function Producto() {
