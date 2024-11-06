@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { redirect, useFetcher } from "react-router-dom";
+import { useFetcher, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,13 +17,14 @@ type SearchFormData = z.infer<typeof searchSchema>;
 
 export const Search = () => {
   const fetcher = useFetcher();
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm<SearchFormData>({
     resolver: zodResolver(searchSchema),
   });
 
   const onSubmit = async (data: SearchFormData) => {
     console.log(data);
-    redirect(`/search?q=${data.search}`);
+    navigate(`/search?q=${data.search}`);
   };
 
   return (
