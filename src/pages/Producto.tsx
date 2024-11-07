@@ -7,28 +7,25 @@ import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
-// Loader para obtener los datos del producto específico desde la API
 export const ProductLoader: LoaderFunction = async ({ params }: LoaderFunctionArgs) => {
-  const id = params.id || ""; // Acceder directamente a params.id
+  const id = params.id || "";
   const response = await fetch(`https://server.jonarrodi99136.workers.dev/items/${id}`);
   const data = await response.json();
   return defer({ data });
 };
 
-// Action para manejar la compra
 export const ProductAction = async ({ request }: ActionFunctionArgs) => {
   try {
-    // Convertir FormData a un objeto JSON
     const formData = await request.formData();
     const productData = Object.fromEntries(formData.entries());
 
-    // Asegurarse de que 'images' esté bien formateado (si es una cadena, parsearlo)
+
     let images = productData.images;
     if (typeof images === 'string') {
-      images = JSON.parse(images); // Solo parsear si es un string JSON
+      images = JSON.parse(images);
     }
 
-    // Preparar el objeto de datos para enviar en la solicitud
+
     const json = JSON.stringify({
       productId: productData.productId,
       title: productData.title,
@@ -41,7 +38,7 @@ export const ProductAction = async ({ request }: ActionFunctionArgs) => {
       quantity: productData.quantity,
     });
 
-    // Enviar la solicitud POST
+
     await fetch("https://server.jonarrodi99136.workers.dev/addSale", {
       method: 'POST',
       body: json,
@@ -51,7 +48,7 @@ export const ProductAction = async ({ request }: ActionFunctionArgs) => {
     });
     toast.success("Producto comprado exitosamente");
 
-    return redirect("/sales"); // Redirige a la página principal
+    return redirect("/sales");
 
 
   } catch (error) {
@@ -61,13 +58,12 @@ export const ProductAction = async ({ request }: ActionFunctionArgs) => {
 };
 
 
-// Componente para mostrar detalles del producto
+
 function Producto() {
   const data = useLoaderData() as { data: Product };
   const fetcher = useFetcher();
 
   const handlePurchase = (product: Product) => {
-    // Crear FormData y agregar los datos del producto
     const formData = new FormData();
     formData.append("productId", product.id.toString());
     formData.append("title", product.title);
@@ -76,10 +72,9 @@ function Producto() {
     formData.append("brand", product.brand);
     formData.append("stock", product.stock.toString());
     formData.append("category", product.category);
-    formData.append("images", JSON.stringify(product.images)); // Convertir imágenes a string
+    formData.append("images", JSON.stringify(product.images))
     formData.append("quantity", "1");
 
-    // Enviar los datos usando fetcher.submit con FormData
     fetcher.submit(formData, {
       method: "POST",
       action: `/producto/${product.id}`,
@@ -104,7 +99,6 @@ function Producto() {
 
 export default Producto;
 
-// Componente de detalles del producto con botón de compra
 const ProductDetail = ({ product, onPurchase }: { product: Product; onPurchase: (product: Product) => void }) => (
   <Card className="shadow-lg p-6">
     <CardHeader className="flex flex-col items-center">
@@ -136,7 +130,6 @@ const ProductDetail = ({ product, onPurchase }: { product: Product; onPurchase: 
   </Card>
 );
 
-// Componente de carga mientras se obtienen los datos
 const LoadingSkeleton = () => (
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
     <Skeleton className="w-full h-80 bg-gray-200 rounded-lg" />
