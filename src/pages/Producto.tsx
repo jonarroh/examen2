@@ -42,10 +42,9 @@ export const ProductAction = async ({ request }: ActionFunctionArgs) => {
     });
 
     // Enviar la solicitud POST
-    await fetch("https://examen2-mauve.vercel.app/api/addSale", {
+    await fetch("https://server.jonarrodi99136.workers.dev/addSale", {
       method: 'POST',
       body: json,
-      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
       },
