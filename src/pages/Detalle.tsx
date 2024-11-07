@@ -11,11 +11,11 @@ import { Button } from "@/components/ui/button";
 export const DetalleLoader: LoaderFunction = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const response = fetch(`https://examen2-mauve.vercel.app/api/items?q=${q}`).then((r) => r.json());
+  const response = fetch(`https://server.jonarrodi99136.workers.dev/items?q=${q}`).then((r) => r.json());
   return defer({ data: response });
 };
 
-// Componente principal
+
 const Detalle = () => {
   const data = useLoaderData() as { data: Product[] };
 

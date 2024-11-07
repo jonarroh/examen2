@@ -18,8 +18,12 @@ function Navbar() {
     <nav className="flex items-center justify-between p-4 bg-white shadow-md">
       {/* Logo */}
       <div className="flex items-center">
-        <img src="/logo.jpg" alt="Logo" className="w-16 h-16 rounded-full mr-4" />
-        <h1 className="text-xl font-bold text-gray-800">Bazar Online</h1>
+        <img src="/logo.jpg" alt="Logo" className="w-16 h-16 rounded-full mr-4"
+          onClick={() => nav("/sales")}
+        />
+        <h1 className="text-xl font-bold text-gray-800"
+          onClick={() => nav("/")}
+        >Bazar Online</h1>
       </div>
 
       {/* Search Input and Button */}

@@ -5,11 +5,12 @@ import { ActionFunctionArgs, Await, defer, LoaderFunction, LoaderFunctionArgs, r
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 
 // Loader para obtener los datos del producto específico desde la API
 export const ProductLoader: LoaderFunction = async ({ params }: LoaderFunctionArgs) => {
   const id = params.id || ""; // Acceder directamente a params.id
-  const response = await fetch(`https://examen2-mauve.vercel.app/api/items/${id}`);
+  const response = await fetch(`https://server.jonarrodi99136.workers.dev/items/${id}`);
   const data = await response.json();
   return defer({ data });
 };
@@ -41,20 +42,18 @@ export const ProductAction = async ({ request }: ActionFunctionArgs) => {
     });
 
     // Enviar la solicitud POST
-    const response = await fetch("https://examen2-mauve.vercel.app/api/addSale", {
+    const response = await fetch("https://server.jonarrodi99136.workers.dev/addSale", {
       method: 'POST',
       body: json,
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    toast.success("Producto comprado exitosamente");
 
-    if (response.ok) {
-      return redirect("/"); // Redirige a la página principal
-    } else {
-      const errorData = await response.json();
-      return { status: response.status, error: errorData };
-    }
+    return redirect("/sales"); // Redirige a la página principal
+
+
   } catch (error) {
     console.error("Error en la acción del producto:", error);
     return { status: 500, error: "Error interno del servidor" };
