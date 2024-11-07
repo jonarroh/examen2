@@ -12,6 +12,7 @@ export default defineConfig({
   },
   plugins: [react(),
     VitePWA({
+      injectRegister: 'auto',
       registerType: 'autoUpdate',
       manifest:{
       name: "Bazar Online",

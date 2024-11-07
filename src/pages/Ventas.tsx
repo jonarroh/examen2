@@ -1,15 +1,12 @@
-import { LoaderFunction, Await, defer, useLoaderData, useNavigate } from "react-router-dom";
+import { LoaderFunction, Await, defer, useLoaderData } from "react-router-dom";
 import { Suspense } from "react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LoaderFunctionArgs } from "react-router-dom";
-import { Order } from "@/types";
 import Navbar from "@/components/navbar";
 import { Product } from "@/types";
-import { Button } from "@/components/ui/button";
 
 // Loader para obtener los datos de ventas desde la API
-export const SalesLoader: LoaderFunction = async ({ request }: LoaderFunctionArgs) => {
+export const SalesLoader: LoaderFunction = async () => {
   const response = await fetch(`https://server.jonarrodi99136.workers.dev/sales`);
   const data = await response.json();
 

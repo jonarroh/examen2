@@ -42,7 +42,7 @@ export const ProductAction = async ({ request }: ActionFunctionArgs) => {
     });
 
     // Enviar la solicitud POST
-    const response = await fetch("https://server.jonarrodi99136.workers.dev/addSale", {
+    await fetch("https://server.jonarrodi99136.workers.dev/addSale", {
       method: 'POST',
       body: json,
       headers: {
