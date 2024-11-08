@@ -118,7 +118,7 @@ const ProductDetail = ({ product, onPurchase }: { product: Product; onPurchase: 
     <CardContent className="mt-4">
       <p className="text-gray-600 mb-4">{product.description}</p>
       <p className="text-lg font-semibold text-gray-800">Precio: ${product.price.toFixed(2)}</p>
-      <p className="text-gray-600">Marca: {product.brand}</p>
+      <p className="text-gray-600">Marca: {product.brand ?? "N/A"}</p>
       <p className="text-gray-600">Stock: {product.stock} unidades</p>
       <p className="text-gray-600">Categoría: {product.category}</p>
     </CardContent>
