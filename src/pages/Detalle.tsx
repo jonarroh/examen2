@@ -2,7 +2,7 @@ import { LoaderFunction, Await, defer, useLoaderData } from "react-router-dom";
 import { Suspense } from "react";
 
 import { LoaderFunctionArgs } from "react-router-dom";
-import { Product, Products } from "@/types";
+import { Products } from "@/types";
 import Navbar from "@/components/navbar";
 import { ProductCard } from "@/components/ProductCard";
 import { LoadingSkeleton } from "@/components/Skeleton";
