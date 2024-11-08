@@ -1,10 +1,10 @@
-import { Product } from "@/types";
+import { Products } from "@/types";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import { StarPuntuacion } from "../StarPuntation";
 
-export const ProductCard = ({ product }: { product: Product }) => {
+export const ProductCard = ({ product }: { product: Products }) => {
   const navigate = useNavigate();
   return (
     <Card className="shadow-lg hover:shadow-xl transition-shadow duration-200">

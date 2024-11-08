@@ -43,12 +43,7 @@ interface Product {
   images: string[];
 }
 
-interface ProductsData {
-  products: Product[];
-  total: number;
-  skip: number;
-  limit: number;
-}
+
 app.post('/addSale', async (c) => {
   try {
     const body = await c.req.json();  // Obtener el cuerpo de la solicitud
@@ -88,11 +83,9 @@ app.get('/items/:id', async (c) => {
       throw new Error('Error al obtener productos de Firebase');
     }
 
-    const productsData = await response.json() as ProductsData;
-    const products = productsData.products || [];
-
-    // Buscar el producto por ID
-    const product = products.find(product => product.id === Number(id));
+    const productsData = await response.json() as any;
+    const products = productsData || [];
+    const product = products.find((product:any) => product.id === Number(id));
 
     if (!product) {
       return c.json({ error: 'Product not found' }, 404);
@@ -117,13 +110,17 @@ app.get('/items', async (c) => {
       throw new Error('Error al obtener productos de Firebase');
     }
 
-    const data = await response.json() as ProductsData;
-    const products: Product[]= data.products || [];
+    const data = await response.json() as any;
+    console.log(data);
+    console.log(typeof data);
+  
+    const products: any[]= data || [];
 
     // Filtrar productos que contengan la query en su marca o categoría
     const filteredProducts = products.filter(product =>
-      product.brand.toLowerCase().includes(query.toLowerCase()) ||
-      product.category.toLowerCase().includes(query.toLowerCase())
+      product.description.toLowerCase().includes(query.toLowerCase()) ||
+      product.category.toLowerCase().includes(query.toLowerCase()) ||
+      product.title.toLowerCase().includes(query.toLowerCase()) 
     );
 
     console.log(filteredProducts);
